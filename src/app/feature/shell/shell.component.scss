@@ -1,0 +1,29 @@
+:host ::ng-deep .breadcrumb-item {
+  font-size: 0.625rem !important;
+}
+
+.avatar {
+  width: 2rem;
+  height: 2rem;
+  margin: 0 0.4rem;
+  border-radius: 50%;
+}
+
+.version-badge {
+  padding: 1rem 0;
+  font-size: 0.5625rem;
+  font-weight: 300;
+  float: right;
+}
+
+@media screen and (min-width: 0px) and (max-width: 720px) {
+  #user-name {
+    display: none;
+  }
+}
+
+@media screen and (min-width: 0px) and (max-width: 576px) {
+  :host ::ng-deep .main-container .content-container .content-area {
+    padding: 1.2rem 1rem 1.2rem 1rem !important;
+  }
+}
