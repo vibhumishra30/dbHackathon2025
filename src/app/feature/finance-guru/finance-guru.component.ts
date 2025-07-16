@@ -3,6 +3,7 @@ import { Component, importProvidersFrom } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ClrAlertModule, ClrInputModule } from '@clr/angular';
 import { GoogleGenAI } from "@google/genai";
+import { environment } from 'environments/environment';
 import { MarkdownModule } from 'ngx-markdown'; 
 
 @Component({
@@ -13,7 +14,7 @@ import { MarkdownModule } from 'ngx-markdown';
   imports: [ClrInputModule, ClrAlertModule, ReactiveFormsModule, CommonModule, MarkdownModule],
 })
 export class FinanceGuruComponent {
-  ai = new GoogleGenAI({ apiKey: "AIzaSyCVs2yk7fsGFWk3QRc6JWWOIl1tiQ32PH0" });
+  ai = new GoogleGenAI({ apiKey: `${environment.GOOGLE_API_KEY}` });
   aiSuggestion: string = '';
   loading: boolean = false;
   askForm: FormGroup = new FormGroup({
