@@ -1,0 +1,12 @@
+/* Styles specific to the AppComponent */
+h1 {
+    color: #2c3e50;
+    font-size: 2.5em;
+    text-align: center;
+}
+
+p {
+    font-size: 1.2em;
+    color: #34495e;
+    text-align: center;
+}

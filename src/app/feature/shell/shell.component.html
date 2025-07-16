@@ -1,0 +1,36 @@
+<clr-main-container>
+  <clr-header class="header-6">
+    <div class="branding">
+      <a routerLink="./" class="nav-link">
+        <cds-icon shape="dashboard"></cds-icon>
+        <span class="title">Your Finance Guru powered by AI</span>
+      </a>
+    </div>
+    <div class="header-actions">
+      <clr-dropdown>
+        <button class="nav-text" clrDropdownTrigger aria-label="open user profile">
+          <span id="user-name">{{ (user$ | async)?.displayName || '' }}</span>
+          <img
+            *ngIf="(user$ | async)?.photoURL"
+            class="avatar"
+            [src]="(user$ | async)?.photoURL"
+            alt="avatar"
+          />
+          <cds-icon shape="angle" direction="down"></cds-icon>
+        </button>
+        <clr-dropdown-menu *clrIfOpen clrPosition="bottom-right">
+          <a clrDropdownItem> Preferences </a>
+          <a clrDropdownItem (click)="logout()">Log out</a>
+        </clr-dropdown-menu>
+      </clr-dropdown>
+    </div>
+  </clr-header>
+  <div class="content-container">
+    <main class="content-area">
+      <router-outlet></router-outlet>
+    </main>
+    <clr-vertical-nav [clr-nav-level]="1">
+      <a clrVerticalNavLink routerLink="./finance-guru" routerLinkActive="active">Finance Guru</a>
+    </clr-vertical-nav>
+  </div>
+</clr-main-container>

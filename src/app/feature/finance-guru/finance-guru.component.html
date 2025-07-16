@@ -1,0 +1,42 @@
+<div class="clr-row">
+    <div class="card">
+        <h3 class="card-header">AI Finance Guru</h3>
+        <div class="card-block">
+            <form clrForm [formGroup]="askForm">
+                <clr-input-container>
+                    <label>Monthly Income</label>
+                    <input clrInput formControlName="income" />
+                </clr-input-container>
+                <clr-input-container>
+                    <label>Monthly Expense</label>
+                    <input clrInput formControlName="expense" />
+                </clr-input-container>
+                <clr-input-container>
+                    <label>Goal</label>
+                    <input clrInput formControlName="goal" />
+                </clr-input-container>
+
+            </form>
+        </div>
+        <div class="card-footer">
+            <button class="btn btn-primary" type="submit" (click)="submit()">Submit</button>
+            <button class="btn" type="button" (click)="reset()">Reset</button>
+        </div>
+    </div>
+</div>
+<div class="clr-row">
+    <div class="card">
+        <h3 class="card-header">Suggestions</h3>
+        <div class="spinner-group">
+                <span class="spinner spinner-inline center-spinner" *ngIf="loading">
+                    Loading...
+                </span>
+                <span class="center-loading" *ngIf="loading">
+                    Loading...
+                </span>
+        </div>
+        <div class="card-block">
+            <markdown [data]="aiSuggestion"></markdown>
+        </div>
+    </div>
+</div>

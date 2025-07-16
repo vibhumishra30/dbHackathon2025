@@ -1,0 +1,49 @@
+<div class="login-wrapper">
+  <form class="login" [formGroup]="loginForm">
+    <section class="title">
+      <h3 class="welcome">Welcome to</h3>
+      Clarity Starter
+    </section>
+    <div class="login-group">
+      <clr-input-container>
+        <label class="clr-sr-only">Username</label>
+        <input
+          type="text"
+          name="username"
+          clrInput
+          placeholder="Username"
+          formControlName="username"
+        />
+      </clr-input-container>
+      <clr-password-container>
+        <label class="clr-sr-only">Password</label>
+        <input
+          type="password"
+          name="password"
+          clrPassword
+          placeholder="Password"
+          formControlName="password"
+        />
+      </clr-password-container>
+      <clr-checkbox-wrapper>
+        <label>Remember me</label>
+        <input type="checkbox" name="rememberMe" clrCheckbox formControlName="rememberMe" />
+      </clr-checkbox-wrapper>
+      <div class="error active" *ngIf="error">Invalid user name or password</div>
+      <button class="btn btn-primary" type="submit">LOG IN</button>
+      <button class="btn btn-primary" (click)="loginWithGoogle()" type="button">
+        <cds-icon shape="google"></cds-icon>
+        SIGN IN WITH GOOGLE
+      </button>
+      <button class="btn btn-primary" (click)="loginWithGithub()" type="button">
+        <cds-icon shape="github"></cds-icon>
+        SIGN IN WITH GITHUB
+      </button>
+      <button class="btn btn-primary" (click)="loginWithApple()" type="button">
+        <cds-icon shape="apple"></cds-icon>
+        SIGN IN WITH APPLE
+      </button>
+      <p>* If you don't have an account yet, just sign in with one of the methods above</p>
+    </div>
+  </form>
+</div>
