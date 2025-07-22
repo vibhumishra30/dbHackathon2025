@@ -3,7 +3,6 @@ import { Component, importProvidersFrom } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ClrAlertModule, ClrInputModule } from '@clr/angular';
 import { GoogleGenAI } from "@google/genai";
-import { environment } from 'environments/environment';
 import { MarkdownModule } from 'ngx-markdown'; 
 
 @Component({

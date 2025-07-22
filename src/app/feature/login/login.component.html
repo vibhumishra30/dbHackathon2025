@@ -1,49 +1,40 @@
 <div class="login-wrapper">
-  <form class="login" [formGroup]="loginForm">
+  <form class="login" [formGroup]="loginForm" (ngSubmit)="submit()">
     <section class="title">
       <h3 class="welcome">Welcome to</h3>
-      Clarity Starter
+      Finance Guru
     </section>
+
     <div class="login-group">
-      <clr-input-container>
-        <label class="clr-sr-only">Username</label>
-        <input
-          type="text"
-          name="username"
-          clrInput
-          placeholder="Username"
-          formControlName="username"
-        />
+      <clr-input-container *ngIf="isSignUpMode">
+        <label>Name</label>
+        <input clrInput type="text" formControlName="name" placeholder="Your Name" />
       </clr-input-container>
+
+      <clr-input-container *ngIf="isSignUpMode">
+        <label>Contact Number</label>
+        <input clrInput type="text" formControlName="contactNumber" placeholder="Your Contact Number" />
+      </clr-input-container>
+
+      <clr-input-container>
+        <label>Email</label>
+        <input clrInput type="email" formControlName="email" placeholder="Email" />
+      </clr-input-container>
+
       <clr-password-container>
-        <label class="clr-sr-only">Password</label>
-        <input
-          type="password"
-          name="password"
-          clrPassword
-          placeholder="Password"
-          formControlName="password"
-        />
+        <label>Password</label>
+        <input clrPassword type="password" formControlName="password" placeholder="Password" />
       </clr-password-container>
-      <clr-checkbox-wrapper>
-        <label>Remember me</label>
-        <input type="checkbox" name="rememberMe" clrCheckbox formControlName="rememberMe" />
-      </clr-checkbox-wrapper>
-      <div class="error active" *ngIf="error">Invalid user name or password</div>
-      <button class="btn btn-primary" type="submit">LOG IN</button>
-      <button class="btn btn-primary" (click)="loginWithGoogle()" type="button">
-        <cds-icon shape="google"></cds-icon>
-        SIGN IN WITH GOOGLE
+
+      <div class="error active" *ngIf="error">{{ error }}</div>
+
+      <button class="btn btn-primary" type="submit">
+        {{ isSignUpMode ? 'Sign Up' : 'Log In' }}
       </button>
-      <button class="btn btn-primary" (click)="loginWithGithub()" type="button">
-        <cds-icon shape="github"></cds-icon>
-        SIGN IN WITH GITHUB
+
+      <button class="btn btn-link" type="button" (click)="toggleMode()">
+        {{ isSignUpMode ? 'Already have an account? Log in' : 'New user? Sign up' }}
       </button>
-      <button class="btn btn-primary" (click)="loginWithApple()" type="button">
-        <cds-icon shape="apple"></cds-icon>
-        SIGN IN WITH APPLE
-      </button>
-      <p>* If you don't have an account yet, just sign in with one of the methods above</p>
     </div>
   </form>
 </div>

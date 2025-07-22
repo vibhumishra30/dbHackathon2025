@@ -31,10 +31,8 @@ export class ShellComponent {
   constructor(private readonly userService: UserService, private readonly router: Router) {}
 
   public logout() {
-    this.userService.logout().subscribe(() => {
-      this.router.navigateByUrl('/login');
-    });
+    this.userService.logout(); 
+    this.router.navigateByUrl('/login');
   }
-
-
+  
 } 

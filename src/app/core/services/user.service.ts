@@ -1,90 +1,54 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {
-  Auth,
-  GoogleAuthProvider,
-  GithubAuthProvider,
-  OAuthProvider,
-  signInWithPopup,
-  signInWithEmailAndPassword,
-  user,
-  signOut,
-  authState,
-  User,
-  updateProfile,
-} from '@angular/fire/auth';
-import { catchError, concatMap, filter, from, map, Observable, shareReplay, switchMap } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
-  public user$: Observable<User | null>;
+  private baseUrl = 'http://localhost:8080';
 
-  constructor(private auth: Auth) {
-    this.user$ = user(this.auth).pipe(shareReplay(1));
-  }
+  private currentUserSubject = new BehaviorSubject<string | null>(null);
+  public user$: Observable<string | null> = this.currentUserSubject.asObservable();
 
-  public signInWithGoogle(): Observable<User> {
-    return from(signInWithPopup(this.auth, new GoogleAuthProvider())).pipe(
-      catchError((error) => {
-        throw new Error(error.message);
-      }),
-      switchMap(() => this.handleAuthSuccess())
+  constructor(private http: HttpClient) {}
+
+  signup(user: {
+    name: string;
+    email: string;
+    contactNumber: string;
+    password: string;
+  }): Observable<string> {
+      return this.http.post(`${this.baseUrl}/signup`, user, {
+      responseType: 'text',
+    }).pipe(
+      tap((response: string) => {
+        if (response === 'User registered successfully!') { 
+          this.currentUserSubject.next(user.email);  
+        } else {
+          this.currentUserSubject.next(null);
+        }
+      })
     );
   }
 
-  public signInWithGitHub(): Observable<User> {
-    return from(signInWithPopup(this.auth, new GithubAuthProvider())).pipe(
-      catchError((error) => {
-        throw new Error(error.message);
-      }),
-      switchMap(() => this.handleAuthSuccess())
+  login(email: string, password: string): Observable<string> {
+    return this.http.post(
+      `${this.baseUrl}/login`,
+      { email, password },
+      { responseType: 'text' }
+    ).pipe(
+      tap((response: string) => {
+        if (response === 'Login successful!') {
+          this.currentUserSubject.next(email);  
+        } else {
+          this.currentUserSubject.next(null);
+        }
+      })
     );
   }
 
-  public signInWithApple(): Observable<User> {
-    const provider = new OAuthProvider('apple.com');
-    provider.addScope('email');
-    provider.addScope('name');
-    return from(signInWithPopup(this.auth, provider)).pipe(
-      catchError((error) => {
-        throw new Error(error.message);
-      }),
-      switchMap(() => this.handleAuthSuccess())
-    );
-  }
-
-  public login(email: string, password: string): Observable<User> {
-    return from(signInWithEmailAndPassword(this.auth, email, password)).pipe(
-      catchError((error) => {
-        throw new Error(error.message);
-      }),
-      switchMap(() => this.handleAuthSuccess())
-    );
-  }
-
-  public updateUser(user: Partial<User>): Observable<void> {
-    return this.user$.pipe(
-      concatMap((currentUser) =>
-        from(
-          updateProfile(currentUser as User, {
-            displayName: user.displayName ?? undefined,
-            photoURL: user.photoURL ?? undefined,
-          })
-        )
-      )
-    );
-  }
-
-  public logout($event?: Event): Observable<void> {
-    if ($event) $event.preventDefault();
-    return from(signOut(this.auth));
-  }
-
-  private handleAuthSuccess(): Observable<User> {
-    return authState(this.auth).pipe(
-      filter((user) => !!user),
-      map((user) => user as User)
-    );
+  logout(): void {
+    this.currentUserSubject.next(null);
   }
 }
