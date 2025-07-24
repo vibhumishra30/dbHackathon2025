@@ -13,7 +13,8 @@ import { MarkdownModule } from 'ngx-markdown';
   imports: [ClrInputModule, ClrAlertModule, ReactiveFormsModule, CommonModule, MarkdownModule],
 })
 export class FinanceGuruComponent {
-  ai = new GoogleGenAI({ apiKey: `${environment.GOOGLE_API_KEY}` });
+  // ai = new GoogleGenAI({ apiKey: `${environment.GOOGLE_API_KEY}` });
+  ai = new GoogleGenAI({ apiKey: "AIzaSyD5IVHV9bWcljWXgzjgRk6Zy5JoXHEIA9E" });
   aiSuggestion: string = '';
   loading: boolean = false;
   askForm: FormGroup = new FormGroup({
